@@ -5,6 +5,7 @@ object camion {
 	
 	method cargar(unaCosa) {
 		cosas.add(unaCosa)
+		unaCosa.cambiar()
 	}
 	
 	method descargar(cosa){
@@ -24,11 +25,11 @@ object camion {
 	}
 	
 	method objetosPeligrosos(nivel){
-		cosas.filter({cosa => cosa.nivelPeligrosidad() > nivel})
+		return cosas.filter({cosa => cosa.nivelPeligrosidad() > nivel})
 	}
 	
 	method objetosMasPeligrososQue(cosa){
-		cosas.filter({objeto => objeto.nivelPeligrosidad() > cosa.nivelPeligrosidad()})
+		return cosas.filter({objeto => objeto.nivelPeligrosidad() > cosa.nivelPeligrosidad()})
 	}
 	
 	method puedeCircularEnRuta(nivelMaximoPeligrosidad){
@@ -44,6 +45,10 @@ object camion {
 	}
 	
 	method totalBultos(){
-		
+		return cosas.sum({cosa => cosa.bultos()})
+	}
+	
+	method pesos(){
+		return cosas.map({cosa => cosa.peso()})
 	}
 }

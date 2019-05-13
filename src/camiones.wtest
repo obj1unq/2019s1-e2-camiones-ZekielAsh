@@ -1,0 +1,61 @@
+import camion.*
+import cosas.*
+
+describe "Tests de camion"{
+	
+fixture {
+	camion.cargar(bumblebee)
+	camion.cargar(knightRider)
+}
+	test "Cargar y descargar el camion"{
+	assert.that(camion.cosas().contains(knightRider))
+	camion.descargar(knightRider)
+	assert.notThat(camion.cosas().contains(knightRider))
+	}
+
+	test "Peso del camion cargado"{
+	assert.equals(2300, camion.pesoTotal())
+	assert.notThat(camion.excedidoDePeso())
+	}
+
+	test "El camion no lleva objetos muy peligrosos"{
+	contenedorPortuario.cargar(bateriaAntiaerea)
+	camion.cargar(contenedorPortuario)
+	assert.equals([], camion.objetosPeligrosos(100))
+	}
+
+	test "El camion tiene un objeto muy peligroso"{
+	camion.cargar(bateriaAntiaerea)
+	camion.cargar(residuosRadioactivos)
+	assert.equals([residuosRadioactivos], camion.objetosMasPeligrososQue(bateriaAntiaerea))
+	}
+
+	test "El camion puede circular en la ruta 40"{
+	embalajeDeSeguridad.embalar(bateriaAntiaerea)
+	camion.cargar(embalajeDeSeguridad)
+	assert.that(camion.puedeCircularEnRuta(50))
+	}
+	
+	test "Una cosa en el camion tiene un peso aceptable"{
+		camion.cargar(arenaGranel)
+		assert.that(camion.tieneAlgoQuePesaEntre(10, 40))
+	}
+	
+	test "El camion no lleva nada que tenga un peso aceptable"{
+		assert.notThat(camion.tieneAlgoQuePesaEntre(100, 300))
+	}
+	
+	test "Se necesita saber la cosa mas pesada"{
+		assert.equals(bumblebee, camion.cosaMasPesada())
+	}
+	
+	test "Se tienen que registar los bultos en el camion"{
+		paqueteDeLadrillos.cantidadDeLadrillos(270)
+		camion.cargar(paqueteDeLadrillos)
+		assert.equals(5, camion.totalBultos())
+	}
+	
+	test "Total de pesos en camion"{
+		assert.equals([800, 500], camion.pesos())
+	}
+}
