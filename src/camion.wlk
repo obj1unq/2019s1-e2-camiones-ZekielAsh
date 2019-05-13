@@ -5,7 +5,7 @@ object camion {
 	
 	method cargar(unaCosa) {
 		cosas.add(unaCosa)
-		unaCosa.cambiar()
+		unaCosa.estaSiendoCargada()
 	}
 	
 	method descargar(cosa){
@@ -33,7 +33,7 @@ object camion {
 	}
 	
 	method puedeCircularEnRuta(nivelMaximoPeligrosidad){
-		return cosas.all({cosa => cosa.nivelPeligrosidad() < nivelMaximoPeligrosidad})
+		return cosas.all({cosa => cosa.nivelPeligrosidad() <= nivelMaximoPeligrosidad})
 	}
 	
 	method tieneAlgoQuePesaEntre(min, max){

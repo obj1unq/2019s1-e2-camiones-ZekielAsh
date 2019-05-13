@@ -2,7 +2,7 @@ object knightRider {
 	method peso() { return 500 }
 	method nivelPeligrosidad() { return 10 }
 	method bultos() { return 1 }
-	method cambiar() { /* No hace nada */}
+	method estaSiendoCargada() { /* No hace nada */}
 }
 
 object bumblebee {
@@ -12,7 +12,7 @@ object bumblebee {
 	method nivelPeligrosidad() { return if (transformadoEnAuto) { 15 } else { 30 }  }
 	method transformar() { transformadoEnAuto = not transformadoEnAuto }
 	method bultos() { return 2 }
-	method cambiar() {self.transformar()}
+	method estaSiendoCargada() {transformadoEnAuto = false}
 }
 
 object paqueteDeLadrillos {
@@ -23,7 +23,7 @@ object paqueteDeLadrillos {
 	method bultos() { return if (cantidadDeLadrillos > 300) { 3 } 
 		else if (cantidadDeLadrillos > 100) { 2 } else { 1 }
 	}
-	method cambiar() { cantidadDeLadrillos += 12}
+	method estaSiendoCargada() { cantidadDeLadrillos += 12}
 }
 
 object arenaGranel {
@@ -31,7 +31,7 @@ object arenaGranel {
 	
 	method nivelPeligrosidad() { return 1 }
 	method bultos() { return 1 }
-	method cambiar() { peso += 20}
+	method estaSiendoCargada() { peso += 20}
 }
 
 object bateriaAntiaerea {
@@ -42,27 +42,27 @@ object bateriaAntiaerea {
 	method cargarMisiles() { cargadaConMisiles = true }
 	method bultos() { return if (cargadaConMisiles) { 2 } else { 1 }
 	}
-	method cambiar() { self.cargarMisiles() }
+	method estaSiendoCargada() { self.cargarMisiles() }
 }
 
 object contenedorPortuario {
-	var property carga = []
+	const cosas = []
 	
-	method peso() { return 100 + carga.sum({cosa => cosa.peso()})}
-	method nivelPeligrosidad() { return if (carga.isEmpty()) { 0 }
+	method peso() { return 100 + cosas.sum({cosa => cosa.peso()})}
+	method nivelPeligrosidad() { return if (cosas.isEmpty()) { 0 }
 			else { self.cosaMasPeligrosa() }
 	}
 	method cosaMasPeligrosa(){
-		 return carga.max({cosa => cosa.nivelPeligrosidad()}).nivelPeligrosidad()
+		 return cosas.max({cosa => cosa.nivelPeligrosidad()}).nivelPeligrosidad()
 	}
 	method cargar(cosa){
-		carga.add(cosa)
+		cosas.add(cosa)
 	}
 	method descargar(cosa){
-		carga.remove(cosa)
+		cosas.remove(cosa)
 	}
-	method bultos() { return 1 + carga.sum({cosa => cosa.bulto()}) }
-	method cambiar() { carga.forEach({cosa => cosa.cambiar()}) }
+	method bultos() { return 1 + cosas.sum({cosa => cosa.bulto()}) }
+	method estaSiendoCargada() { cosas.forEach({cosa => cosa.estaSiendoCargada()}) }
 }
 
 object residuosRadioactivos{
@@ -70,7 +70,7 @@ object residuosRadioactivos{
 	
 	method nivelPeligrosidad() { return 200 }
 	method bultos() { return 1 }
-	method cambiar() { peso += 15}
+	method estaSiendoCargada() { peso += 15}
 }
 
 object embalajeDeSeguridad{
@@ -80,5 +80,5 @@ object embalajeDeSeguridad{
 	method peso() { cosaEmbalada.peso() }
 	method nivelPeligrosidad() { return cosaEmbalada.nivelPeligrosidad() / 2 }
 	method bultos() { return 2}
-	method cambiar() { /* No hace nada */}
+	method estaSiendoCargada() { /* No hace nada */}
 }

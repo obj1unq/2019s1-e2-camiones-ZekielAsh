@@ -9,7 +9,7 @@ test "Peligrosidad de contenedor"{
 test "Cambios en el contenedor"{
 	contenedorPortuario.cargar(bateriaAntiaerea)
 	contenedorPortuario.cargar(bumblebee)
-	contenedorPortuario.cambiar()
+	contenedorPortuario.estaSiendoCargada()
 	assert.equals(1200, contenedorPortuario.peso())
 	assert.equals(100, contenedorPortuario.nivelPeligrosidad())
 }
