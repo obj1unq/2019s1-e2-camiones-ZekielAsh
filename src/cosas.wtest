@@ -1,0 +1,15 @@
+import cosas.*
+
+test "Peligrosidad de contenedor"{
+	assert.equals(0, contenedorPortuario.nivelPeligrosidad())
+	contenedorPortuario.cargar(knightRider)
+	assert.equals(10, contenedorPortuario.nivelPeligrosidad())
+}
+
+test "Cambios en el contenedor"{
+	contenedorPortuario.cargar(bateriaAntiaerea)
+	contenedorPortuario.cargar(bumblebee)
+	contenedorPortuario.estaSiendoCargada()
+	assert.equals(1200, contenedorPortuario.peso())
+	assert.equals(100, contenedorPortuario.nivelPeligrosidad())
+}
